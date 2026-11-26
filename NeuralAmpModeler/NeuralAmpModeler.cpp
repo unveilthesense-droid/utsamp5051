@@ -883,7 +883,8 @@ std::string NeuralAmpModeler::_StageModel(const WDL_String& modelPath)
       if (slimmable != nullptr && currentSlim != slim)
         slimmable->SetSlimmableSize(currentSlim);
       mNAMPath = modelPath;
-      std::swap(mStagedModel, staged);
+mModelIsBundledDefault = false;
+std::swap(mStagedModel, staged);
     }
     SendControlMsgFromDelegate(kCtrlTagModelFileBrowser, kMsgTagLoadedModel, modelPath.GetLength(), modelPath.Get());
   }
@@ -928,7 +929,8 @@ std::string NeuralAmpModeler::_StageCab(const WDL_String& cabPath)
       if (currentRate != sampleRate)
         staged.Reset(currentRate);
       mCabPath = cabPath;
-      std::swap(mStagedCab, staged);
+mCabIsBundledDefault = false;
+std::swap(mStagedCab, staged);
     }
     SendControlMsgFromDelegate(kCtrlTagCabFileBrowser, kMsgTagLoadedCab, cabPath.GetLength(), cabPath.Get());
   }
