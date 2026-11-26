@@ -5,7 +5,14 @@
 #include <iostream>
 #include <limits>
 #include <utility>
+#include <stdexcept>
 
+#ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#endif
 #include "Colors.h"
 #include "../NeuralAmpModelerCore/NAM/activations.h"
 #include "../NeuralAmpModelerCore/NAM/get_dsp.h"
@@ -78,6 +85,36 @@ const double kDefaultInputCalibrationLevel = 12.0;
 
 
 NeuralAmpModeler::NeuralAmpModeler(const InstanceInfo& info)
+#ifdef _WIN32
+namespace
+{
+  int utsModuleAnchor = 0;
+
+  std::filesystem::path GetUTSResources()
+  {
+    HMODULE module = nullptr;
+
+    if (!GetModuleHandleExW(
+          GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+          GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+          reinterpret_cast<LPCWSTR>(&utsModuleAnchor),
+          &module))
+    {
+      throw std::runtime_error("UTS plugin module not found");
+    }
+
+    wchar_t path[32768];
+    const DWORD n = GetModuleFileNameW(module, path, 32768);
+
+    if (n == 0 || n >= 32768)
+      throw std::runtime_error("UTS plugin path not found");
+
+    return std::filesystem::path(path)
+      .parent_path()
+      .parent_path() / L"Resources";
+  }
+}
+#endif
 : Plugin(info, MakeConfig(kNumParams, kNumPresets))
 {
   _InitToneStack();
@@ -100,7 +137,36 @@ NeuralAmpModeler::NeuralAmpModeler(const InstanceInfo& info)
   mNoiseGateTrigger.AddListener(&mNoiseGateGain);
   mNoiseGateTrigger.AddListener(&mNoiseGateGainRight);
 
-  mMakeGraphicsFunc = [&]() {
+  mMakeGraphicsFunc = [&]()
+#ifdef _WIN32
+try
+{
+  const auto resources = GetUTSResources();
+
+  const auto amp = (resources / "UTSRYTHMAMP.nam").u8string();
+  const auto ir  = (resources / "UTSRYTHMIR.wav").u8string();
+
+  const WDL_String ampPath(
+    reinterpret_cast<const char*>(amp.c_str()));
+
+  const WDL_String irPath(
+    reinterpret_cast<const char*>(ir.c_str()));
+
+  const std::string ampError = _StageModel(ampPath);
+  const std::string irError  = _StageCab(irPath);
+
+  if (!ampError.empty())
+    std::cerr << "UTS NAM: " << ampError << '\n';
+
+  if (!irError.empty())
+    std::cerr << "UTS IR: " << irError << '\n';
+}
+catch (const std::exception& e)
+{
+  std::cerr << "UTS startup error: " << e.what() << '\n';
+}
+#endif
+{
 
 #ifdef OS_IOS
     auto scaleFactor = GetScaleForScreen(PLUG_WIDTH, PLUG_HEIGHT) * 0.85f;
