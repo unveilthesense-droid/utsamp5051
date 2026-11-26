@@ -665,9 +665,12 @@ bool NeuralAmpModeler::OnMessage(int msgTag, int ctrlTag, int dataSize, const vo
       superseded = std::move(mStagedModel);
       mNAMPath.Set("");
       mShouldRemoveModel = true;
-      return true;
+mModelIsBundledDefault = false;
+return true;
     }
-    case kMsgTagClearCab:
+    mShouldRemoveCab = true;
+mCabIsBundledDefault = false;
+return true;
     {
       Cabinet superseded;
       const std::lock_guard lock(mDSPStagingMutex);
