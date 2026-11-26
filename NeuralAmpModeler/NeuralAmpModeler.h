@@ -189,6 +189,8 @@ private:
   Cabinet mStagedCab;
   bool mShouldRemoveModel = false;
   bool mShouldRemoveCab = false;
+bool mModelIsBundledDefault = false;
+bool mCabIsBundledDefault = false;
 
   std::atomic<bool> mDSPGainsAndTimingDirty{true};
   std::atomic<bool> mToneStackDirty{true};
