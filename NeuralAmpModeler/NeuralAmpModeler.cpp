@@ -573,14 +573,18 @@ int NeuralAmpModeler::UnserializeState(const IByteChunk& chunk, int startPos)
   pos = chunk.GetStr(header, pos);
 
   const char* kExpectedHeader = "###NeuralAmpModeler###";
-  if (strcmp(header.Get(), kExpectedHeader) == 0)
-  {
-    return _UnserializeStateWithKnownVersion(chunk, pos);
-  }
-  else
-  {
-    return _UnserializeStateWithUnknownVersion(chunk, startPos);
-  }
+  int result;
+
+if (strcmp(header.Get(), kExpectedHeader) == 0)
+{
+  result = _UnserializeStateWithKnownVersion(chunk, pos);
+}
+else
+{
+  result = _UnserializeStateWithUnknownVersion(chunk, startPos);
+}
+
+return result;
 }
 
 void NeuralAmpModeler::OnUIOpen()
