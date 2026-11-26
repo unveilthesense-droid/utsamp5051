@@ -101,8 +101,15 @@ jobs:
         $out = Join-Path $project "build-win/out"
 
         if (-not (Test-Path $bundle -PathType Container)) {
-          throw "VST3 bundle not found: $bundle"
-        }
+  Write-Host "Searching for Windows VST3 outputs..."
+
+  Get-ChildItem -LiteralPath $project -Recurse -Force |
+    Where-Object { $_.Name -like "*.vst3" } |
+    Select-Object FullName, PSIsContainer |
+    Format-List
+
+  throw "Expected VST3 bundle directory not found"
+}
 
         New-Item -ItemType Directory -Force -Path $destination | Out-Null
 
