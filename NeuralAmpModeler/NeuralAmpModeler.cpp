@@ -137,8 +137,6 @@ NeuralAmpModeler::NeuralAmpModeler(const InstanceInfo& info)
 
   mNoiseGateTrigger.AddListener(&mNoiseGateGain);
   mNoiseGateTrigger.AddListener(&mNoiseGateGainRight);
-
-  mMakeGraphicsFunc = [&]()
 #ifdef _WIN32
 try
 {
@@ -167,6 +165,8 @@ catch (const std::exception& e)
   std::cerr << "UTS startup error: " << e.what() << '\n';
 }
 #endif
+  mMakeGraphicsFunc = [&]()
+
 {
 
 #ifdef OS_IOS
