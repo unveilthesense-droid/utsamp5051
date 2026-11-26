@@ -84,7 +84,7 @@ const std::string kInputCalibrationLevelParamName = "InputCalibrationLevel";
 const double kDefaultInputCalibrationLevel = 12.0;
 
 
-NeuralAmpModeler::NeuralAmpModeler(const InstanceInfo& info)
+
 #ifdef _WIN32
 namespace
 {
@@ -115,6 +115,7 @@ namespace
   }
 }
 #endif
+NeuralAmpModeler::NeuralAmpModeler(const InstanceInfo& info)
 : Plugin(info, MakeConfig(kNumParams, kNumPresets))
 {
   _InitToneStack();
