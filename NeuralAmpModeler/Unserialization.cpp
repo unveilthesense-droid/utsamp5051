@@ -66,25 +66,13 @@ void NeuralAmpModeler::_UnserializeApplyConfig(nlohmann::json& config)
 {
   _StageModel(modelPath);
 }
-else
-{
-  std::unique_ptr<ResamplingNAM> superseded;
-  const std::lock_guard lock(mDSPStagingMutex);
-  superseded = std::move(mStagedModel);
-  mShouldRemoveModel = true;
-}
+
 
 if (cabPath.GetLength())
 {
   _StageCab(cabPath);
 }
-else
-{
-  Cabinet superseded;
-  const std::lock_guard lock(mDSPStagingMutex);
-  superseded = std::exchange(mStagedCab, {});
-  mShouldRemoveCab = true;
-}
+
 }
 
 // Unserialize model path, cab path, then named keys
