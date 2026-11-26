@@ -90,7 +90,33 @@ jobs:
         cd ${{env.PROJECT_NAME}}\scripts
         .\makedist-win.bat full zip
       shell: pwsh
+    - name: Package UTS Windows VST3
+      if: matrix.os == 'windows-latest'
+      shell: pwsh
+      run: |
+        $project = Join-Path $env:GITHUB_WORKSPACE "NeuralAmpModeler"
+        $bundle = Join-Path $project "build-win/NeuralAmpModeler.vst3"
+        $source = Join-Path $project "resources"
+        $destination = Join-Path $bundle "Contents/Resources"
+        $out = Join-Path $project "build-win/out"
 
+        if (-not (Test-Path $bundle -PathType Container)) {
+          throw "VST3 bundle not found: $bundle"
+        }
+
+        New-Item -ItemType Directory -Force -Path $destination | Out-Null
+
+        foreach ($file in @("UTSRYTHMAMP.nam", "UTSRYTHMIR.wav")) {
+          $src = Join-Path $source $file
+          if (-not (Test-Path $src -PathType Leaf)) {
+            throw "Missing resource: $src"
+          }
+          Copy-Item -LiteralPath $src -Destination $destination -Force
+        }
+
+        New-Item -ItemType Directory -Force -Path $out | Out-Null
+        $zip = Join-Path $out "UTS-Windows-VST3.zip"
+        Compress-Archive -LiteralPath $bundle -DestinationPath $zip -Force
     - name: Validate VST3 bundle (Windows)
       if: matrix.os == 'windows-latest'
       run: |
