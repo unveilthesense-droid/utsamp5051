@@ -153,6 +153,8 @@ try
 
   const std::string ampError = _StageModel(ampPath);
   const std::string irError  = _StageCab(irPath);
+mModelIsBundledDefault = ampError.empty();
+mCabIsBundledDefault = irError.empty();
 
   if (!ampError.empty())
     std::cerr << "UTS NAM: " << ampError << '\n';
