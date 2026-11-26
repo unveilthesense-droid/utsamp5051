@@ -56,11 +56,29 @@ void NeuralAmpModeler::_UnserializeApplyConfig(nlohmann::json& config)
 
   const WDL_String modelPath(static_cast<std::string>(config["NAMPath"]).c_str());
   const WDL_String cabPath(static_cast<std::string>(config["IRPath"]).c_str());
+ std::unique_ptr<ResamplingNAM> supersededModel;
+Cabinet supersededCab;
+
+{
+  const std::lock_guard lock(mDSPStagingMutex);
+
+  if (!modelPath.GetLength() && mModelIsBundledDefault)
   {
-    const std::lock_guard lock(mDSPStagingMutex);
-    mNAMPath = modelPath;
-    mCabPath = cabPath;
+    supersededModel = std::move(mStagedModel);
+    mShouldRemoveModel = true;
+    mModelIsBundledDefault = false;
   }
+
+  if (!cabPath.GetLength() && mCabIsBundledDefault)
+  {
+    supersededCab = std::exchange(mStagedCab, {});
+    mShouldRemoveCab = true;
+    mCabIsBundledDefault = false;
+  }
+
+  mNAMPath = modelPath;
+  mCabPath = cabPath;
+}
 
   if (modelPath.GetLength())
 {
