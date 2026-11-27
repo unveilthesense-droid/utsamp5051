@@ -341,19 +341,11 @@ const auto outputMeterArea =
         knob->Hide(true);
       ui->SetAllControlsDirty();
     };
-    auto showSlimOverlay = [](IControl* pCaller) {
-      IGraphics* ui = pCaller->GetUI();
-      if (auto* backdrop = ui->GetControlWithTag(kCtrlTagSlimOverlayBackdrop))
-        backdrop->Hide(false);
-      if (auto* knob = ui->GetControlWithTag(kCtrlTagSlimKnob))
-        knob->Hide(false);
-      ui->SetAllControlsDirty();
-    };
-
+    
     pGraphics
       ->AttachControl(
         new NAMSquareButtonControl(slimIconArea, DefaultClickActionFunc, slimIconSVG), kCtrlTagSlimmableIcon)
-      ->SetAnimationEndActionFunction(showSlimOverlay)
+      
       ->Hide(true);
 
     pGraphics->AttachControl(new ISVGSwitchControl(cabSwitchArea, {cabIconOffSVG, cabIconOnSVG}, kCabToggle));
@@ -1057,7 +1049,7 @@ void NeuralAmpModeler::_UpdateControlsFromModel()
     }
 
     if (auto* pSlimIcon = pGraphics->GetControlWithTag(kCtrlTagSlimmableIcon))
-      pSlimIcon->Hide(!slimmable);
+      pSlimIcon->Hide(true);
   }
 }
 
