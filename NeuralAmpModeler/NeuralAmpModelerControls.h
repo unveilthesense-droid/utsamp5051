@@ -119,15 +119,7 @@ auto knobRect = mWidgetBounds.GetCentredInside(
     const float angle = mAngle1 + (static_cast<float>(GetValue()) * (mAngle2 - mAngle1));
     DrawIndicatorTrack(g, angle, cx + 0.5, cy, widgetRadius);
     g.DrawFittedBitmap(mBitmap, knobRect);
-    float data[2][2];
-    RadialPoints(angle, cx, cy, mInnerPointerFrac * widgetRadius, mInnerPointerFrac * widgetRadius, 2, data);
-    g.PathCircle(data[1][0], data[1][1], 3);
-    g.PathFill(IPattern::CreateRadialGradient(data[1][0], data[1][1], 4.0f,
-                                              {{GetColor(mMouseIsOver ? kX3 : kX1), 0.f},
-                                               {GetColor(mMouseIsOver ? kX3 : kX1), 0.8f},
-                                               {COLOR_TRANSPARENT, 1.0f}}),
-               {}, &mBlend);
-    g.DrawCircle(COLOR_BLACK.WithOpacity(0.5f), data[1][0], data[1][1], 3, &mBlend);
+    
   }
 };
 
