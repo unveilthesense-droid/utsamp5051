@@ -371,15 +371,16 @@ pGraphics->AttachControl(
                        style.WithShowLabel(false), switchHandleBitmap));
 
     // The knobs
-    pGraphics->AttachControl(new NAMKnobControl(inputKnobArea, kInputLevel, "", style, knobBackgroundBitmap));
-    pGraphics->AttachControl(new NAMKnobControl(noiseGateArea, kNoiseGateThreshold, "", style, knobBackgroundBitmap));
+    const auto knobStyle = style.WithShowLabel(false);
+    pGraphics->AttachControl(new NAMKnobControl(inputKnobArea, kInputLevel, "", knobStyle, knobBackgroundBitmap));
+    pGraphics->AttachControl(new NAMKnobControl(noiseGateArea, kNoiseGateThreshold, "", knobStyle, knobBackgroundBitmap));
     pGraphics->AttachControl(
-      new NAMKnobControl(bassKnobArea, kToneBass, "", style, knobBackgroundBitmap), -1, "EQ_KNOBS");
+      new NAMKnobControl(bassKnobArea, kToneBass, "", knobStyle, knobBackgroundBitmap), -1, "EQ_KNOBS");
     pGraphics->AttachControl(
-      new NAMKnobControl(midKnobArea, kToneMid, "", style, knobBackgroundBitmap), -1, "EQ_KNOBS");
+      new NAMKnobControl(midKnobArea, kToneMid, "", knobStyle, knobBackgroundBitmap), -1, "EQ_KNOBS");
     pGraphics->AttachControl(
-      new NAMKnobControl(trebleKnobArea, kToneTreble, "", style, knobBackgroundBitmap), -1, "EQ_KNOBS");
-    pGraphics->AttachControl(new NAMKnobControl(outputKnobArea, kOutputLevel, "", style, knobBackgroundBitmap));
+      new NAMKnobControl(trebleKnobArea, kToneTreble, "", knobStyle, knobBackgroundBitmap), -1, "EQ_KNOBS");
+    pGraphics->AttachControl(new NAMKnobControl(outputKnobArea, kOutputLevel, "", knobStyle, knobBackgroundBitmap));
 
     // The meters
     pGraphics->AttachControl(new NAMMeterControl<1>(inputMeterArea, meterBackgroundBitmap, style), kCtrlTagInputMeter);
