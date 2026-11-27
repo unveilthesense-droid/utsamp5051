@@ -573,7 +573,7 @@ private:
         mGetButton->Hide(false);
         break;
       case NAMBrowserState::Loaded:
-        mClearButton->Hide(false);
+        mClearButton->Hide(true);
         mGetButton->Hide(true);
         break;
     }
