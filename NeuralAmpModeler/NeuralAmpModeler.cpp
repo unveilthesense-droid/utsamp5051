@@ -257,11 +257,13 @@ const auto outputKnobArea =
       contentArea.GetFromBottom((2.0f * fileHeight)).GetFromTop(fileHeight).GetMidHPadded(fileWidth).GetVShifted(-1);
     const auto ngToggleArea =
   IRECT(modelArea.L, modelArea.T,
-        modelArea.MW() - 5.0f, modelArea.B);
+        modelArea.MW() - 5.0f, modelArea.B)
+    .GetCentredInside(50.0f, modelArea.H());
 
 const auto eqToggleArea =
   IRECT(modelArea.MW() + 5.0f, modelArea.T,
-        modelArea.R, modelArea.B);
+        modelArea.R, modelArea.B)
+    .GetCentredInside(50.0f, modelArea.H());
     const auto slimIconArea =
       IRECT(modelArea.R + 6.f, modelArea.MH() - 14.f, modelArea.R + 6.f + 2.f * 28.f, modelArea.MH() + 14.f);
     const auto modelIconArea = modelArea.GetFromLeft(30).GetTranslated(-40, 10);
