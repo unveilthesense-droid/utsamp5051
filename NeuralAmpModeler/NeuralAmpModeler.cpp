@@ -268,7 +268,8 @@ const auto eqToggleArea =
       IRECT(modelArea.R + 6.f, modelArea.MH() - 14.f, modelArea.R + 6.f + 2.f * 28.f, modelArea.MH() + 14.f);
     const auto modelIconArea = modelArea.GetFromLeft(30).GetTranslated(-40, 10);
     const auto cabArea = modelArea.GetVShifted(cabYOffset);
-    const auto cabSwitchArea = cabArea.GetFromLeft(30.0f).GetHShifted(-40.0f).GetScaledAboutCentre(0.6f);
+    const auto cabSwitchArea =
+  modelArea.GetCentredInside(18.0f, 18.0f);
 
     // Areas for meters
     const auto inputMeterArea =
