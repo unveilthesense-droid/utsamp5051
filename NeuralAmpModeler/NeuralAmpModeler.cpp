@@ -223,12 +223,29 @@ catch (const std::exception& e)
                              .GetReducedFromLeft(knobsPad)
                              .GetReducedFromRight(knobsPad)
                              .GetVShifted(titleHeight + knobsExtraSpaceBelowTitle);
-    const auto inputKnobArea = knobsArea.GetGridCell(0, kInputLevel, 1, numKnobs).GetPadded(-singleKnobPad);
-    const auto noiseGateArea = knobsArea.GetGridCell(0, kNoiseGateThreshold, 1, numKnobs).GetPadded(-singleKnobPad);
-    const auto bassKnobArea = knobsArea.GetGridCell(0, kToneBass, 1, numKnobs).GetPadded(-(singleKnobPad + 16)).GetVShifted(55);
-    const auto midKnobArea = knobsArea.GetGridCell(0, kToneMid, 1, numKnobs).GetPadded(-singleKnobPad);
-    const auto trebleKnobArea = knobsArea.GetGridCell(0, kToneTreble, 1, numKnobs).GetPadded(-singleKnobPad);
-    const auto outputKnobArea = knobsArea.GetGridCell(0, kOutputLevel, 1, numKnobs).GetPadded(-singleKnobPad);
+    const auto inputKnobArea =
+  knobsArea.GetGridCell(0, kInputLevel, 1, numKnobs)
+    .GetPadded(-(singleKnobPad + 22)).GetVShifted(70);
+
+const auto noiseGateArea =
+  knobsArea.GetGridCell(0, kNoiseGateThreshold, 1, numKnobs)
+    .GetPadded(-(singleKnobPad + 22)).GetVShifted(70);
+
+const auto bassKnobArea =
+  knobsArea.GetGridCell(0, kToneBass, 1, numKnobs)
+    .GetPadded(-(singleKnobPad + 22)).GetVShifted(70);
+
+const auto midKnobArea =
+  knobsArea.GetGridCell(0, kToneMid, 1, numKnobs)
+    .GetPadded(-(singleKnobPad + 22)).GetVShifted(70);
+
+const auto trebleKnobArea =
+  knobsArea.GetGridCell(0, kToneTreble, 1, numKnobs)
+    .GetPadded(-(singleKnobPad + 22)).GetVShifted(70);
+
+const auto outputKnobArea =
+  knobsArea.GetGridCell(0, kOutputLevel, 1, numKnobs)
+    .GetPadded(-(singleKnobPad + 22)).GetVShifted(70);
 
    
 
@@ -252,8 +269,13 @@ const auto eqToggleArea =
     const auto cabSwitchArea = cabArea.GetFromLeft(30.0f).GetHShifted(-40.0f).GetScaledAboutCentre(0.6f);
 
     // Areas for meters
-    const auto inputMeterArea = contentArea.GetFromLeft(30).GetHShifted(-20).GetMidVPadded(100).GetVShifted(-25);
-    const auto outputMeterArea = contentArea.GetFromRight(30).GetHShifted(20).GetMidVPadded(100).GetVShifted(-25);
+    const auto inputMeterArea =
+  IRECT(b.L, contentArea.T, b.L + 15.0f, contentArea.B)
+    .GetMidVPadded(100).GetVShifted(-25);
+
+const auto outputMeterArea =
+  IRECT(b.R - 15.0f, contentArea.T, b.R, contentArea.B)
+    .GetMidVPadded(100).GetVShifted(-25);
 
     // Misc Areas
     const auto settingsButtonArea = CornerButtonArea(b);
