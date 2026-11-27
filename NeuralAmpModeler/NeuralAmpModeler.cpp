@@ -230,9 +230,7 @@ catch (const std::exception& e)
     const auto trebleKnobArea = knobsArea.GetGridCell(0, kToneTreble, 1, numKnobs).GetPadded(-singleKnobPad);
     const auto outputKnobArea = knobsArea.GetGridCell(0, kOutputLevel, 1, numKnobs).GetPadded(-singleKnobPad);
 
-    const auto ngToggleArea =
-      noiseGateArea.GetVShifted(noiseGateArea.H()).SubRectVertical(2, 0).GetReducedFromTop(10.0f);
-    const auto eqToggleArea = midKnobArea.GetVShifted(midKnobArea.H()).SubRectVertical(2, 0).GetReducedFromTop(10.0f);
+   
 
     // Areas for model and cab
     const auto fileWidth = 200.0f;
@@ -240,6 +238,13 @@ catch (const std::exception& e)
     const auto cabYOffset = 38.0f;
     const auto modelArea =
       contentArea.GetFromBottom((2.0f * fileHeight)).GetFromTop(fileHeight).GetMidHPadded(fileWidth).GetVShifted(-1);
+    const auto ngToggleArea =
+  IRECT(modelArea.L, modelArea.T,
+        modelArea.MW() - 5.0f, modelArea.B);
+
+const auto eqToggleArea =
+  IRECT(modelArea.MW() + 5.0f, modelArea.T,
+        modelArea.R, modelArea.B);
     const auto slimIconArea =
       IRECT(modelArea.R + 6.f, modelArea.MH() - 14.f, modelArea.R + 6.f + 2.f * 28.f, modelArea.MH() + 14.f);
     const auto modelIconArea = modelArea.GetFromLeft(30).GetTranslated(-40, 10);
@@ -301,7 +306,7 @@ catch (const std::exception& e)
       new NAMFileBrowserControl(modelArea, kMsgTagClearModel, defaultNamFileString.c_str(), "nam",
                                 loadModelCompletionHandler, style, fileSVG, crossSVG, leftArrowSVG, rightArrowSVG,
                                 fileBackgroundBitmap, globeSVG, "Get NAM Models", getUrl),
-      kCtrlTagModelFileBrowser);
+      kCtrlTagModelFileBrowser)->Hide(true);
 
     auto hideSlimOverlay = [](IControl* pCaller) {
       IGraphics* ui = pCaller->GetUI();
@@ -331,7 +336,7 @@ catch (const std::exception& e)
       new NAMFileBrowserControl(cabArea, kMsgTagClearCab, defaultCabString.c_str(), "wav nam", loadCabCompletionHandler,
                                 style, fileSVG, crossSVG, leftArrowSVG, rightArrowSVG, fileBackgroundBitmap, globeSVG,
                                 "Get cabs", getUrl),
-      kCtrlTagCabFileBrowser);
+      kCtrlTagCabFileBrowser)->Hide(true);
     pGraphics->AttachControl(
       new NAMSwitchControl(ngToggleArea, kNoiseGateActive, "Noise Gate", style, switchHandleBitmap));
     pGraphics->AttachControl(new NAMSwitchControl(eqToggleArea, kEQActive, "EQ", style, switchHandleBitmap));
