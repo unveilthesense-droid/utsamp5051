@@ -111,10 +111,10 @@ public:
 
   void DrawWidget(IGraphics& g) override
   {
-    float widgetRadius = GetRadius() * 0.365f;
+    float widgetRadius = GetRadius() * 0.4015f;
 auto knobRect = mWidgetBounds.GetCentredInside(
-  mWidgetBounds.W() * 0.5f,
-  mWidgetBounds.W() * 0.5f);
+  mWidgetBounds.W() * 0.55f,
+  mWidgetBounds.W() * 0.55f);
     const float cx = knobRect.MW(), cy = knobRect.MH();
     const float angle = mAngle1 + (static_cast<float>(GetValue()) * (mAngle2 - mAngle1));
     DrawIndicatorTrack(g, angle, cx + 0.5, cy, widgetRadius);
