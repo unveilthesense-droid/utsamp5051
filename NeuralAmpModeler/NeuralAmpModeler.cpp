@@ -363,8 +363,12 @@ const auto outputMeterArea =
                                 "Get cabs", getUrl),
       kCtrlTagCabFileBrowser)->Hide(true);
     pGraphics->AttachControl(
-      new NAMSwitchControl(ngToggleArea, kNoiseGateActive, "Noise Gate", style, switchHandleBitmap));
-    pGraphics->AttachControl(new NAMSwitchControl(eqToggleArea, kEQActive, "EQ", style, switchHandleBitmap));
+  new NAMSwitchControl(ngToggleArea, kNoiseGateActive, "",
+                       style.WithShowLabel(false), switchHandleBitmap));
+
+pGraphics->AttachControl(
+  new NAMSwitchControl(eqToggleArea, kEQActive, "",
+                       style.WithShowLabel(false), switchHandleBitmap));
 
     // The knobs
     pGraphics->AttachControl(new NAMKnobControl(inputKnobArea, kInputLevel, "", style, knobBackgroundBitmap));
