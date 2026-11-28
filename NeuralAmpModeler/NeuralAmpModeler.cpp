@@ -225,27 +225,27 @@ catch (const std::exception& e)
                              .GetVShifted(titleHeight + knobsExtraSpaceBelowTitle);
     const auto inputKnobArea =
   knobsArea.GetGridCell(0, kInputLevel, 1, numKnobs)
-    .GetPadded(-(singleKnobPad + 22)).GetVShifted(65);
+    .GetPadded(-(singleKnobPad + 22)).GetVShifted(68);
 
 const auto noiseGateArea =
   knobsArea.GetGridCell(0, kNoiseGateThreshold, 1, numKnobs)
-    .GetPadded(-(singleKnobPad + 22)).GetVShifted(65);
+    .GetPadded(-(singleKnobPad + 22)).GetHShifted(-10).GetVShifted(68);
 
 const auto bassKnobArea =
   knobsArea.GetGridCell(0, kToneBass, 1, numKnobs)
-    .GetPadded(-(singleKnobPad + 22)).GetVShifted(65);
+    .GetPadded(-(singleKnobPad + 22)).GetHShifted(-20).GetVShifted(68);
 
 const auto midKnobArea =
   knobsArea.GetGridCell(0, kToneMid, 1, numKnobs)
-    .GetPadded(-(singleKnobPad + 22)).GetVShifted(65);
+    .GetPadded(-(singleKnobPad + 22)).GetHShifted(20).GetVShifted(68);
 
 const auto trebleKnobArea =
   knobsArea.GetGridCell(0, kToneTreble, 1, numKnobs)
-    .GetPadded(-(singleKnobPad + 22)).GetVShifted(65);
+    .GetPadded(-(singleKnobPad + 22)).GetHShifted(10).GetVShifted(68);
 
 const auto outputKnobArea =
   knobsArea.GetGridCell(0, kOutputLevel, 1, numKnobs)
-    .GetPadded(-(singleKnobPad + 22)).GetVShifted(65);
+    .GetPadded(-(singleKnobPad + 22)).GetVShifted(68);
 
    
 
